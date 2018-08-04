@@ -10,12 +10,14 @@ from text_recognizer.models.line_model import LineModel
 from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 from text_recognizer.networks.ctc import ctc_decode
+from keras.backend import tf as ktf
 
 # Test
 
 def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
-    image_height, image_width = input_shape
+    old_image_height, image_width = input_shape
     output_length, num_classes = output_shape
+    image_height = 32
 
     num_windows = int((image_width - window_width) / window_stride) + 1
     if num_windows < output_length:
@@ -36,7 +38,10 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     # Note that lstms expect a input of shape (num_batch_size, num_timesteps, feature_length).
 
     ##### Your code below (Lab 3)
-    image_reshaped = Reshape((image_height, image_width, 1))(image_input)
+
+    image_out = Lambda(lambda image: ktf.image.resize_images(image, (image_height, image_width)))(image_input)
+
+    image_reshaped = Reshape((image_height, image_width, 1))(image_out)
     # (image_height, image_width, 1)
 
     image_patches = Lambda(
