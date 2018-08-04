@@ -11,6 +11,7 @@ from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 from text_recognizer.networks.ctc import ctc_decode
 
+# Test
 
 def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     image_height, image_width = input_shape
