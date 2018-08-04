@@ -10,7 +10,7 @@ from text_recognizer.models.line_model import LineModel
 from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 from text_recognizer.networks.ctc import ctc_decode
-from keras.backend import tf as ktf
+# from keras.backend import tf as ktf
 
 # Test
 
@@ -39,7 +39,7 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
 
     ##### Your code below (Lab 3)
 
-    image_out = Lambda(lambda image: ktf.image.resize_images(image, (image_height, image_width)))(image_input)
+    image_out = Lambda(lambda image: K.image.resize_images(image, (image_height, image_width)))(image_input)
 
     image_reshaped = Reshape((image_height, image_width, 1))(image_out)
     # (image_height, image_width, 1)
